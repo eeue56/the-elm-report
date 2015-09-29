@@ -110,6 +110,14 @@ Instead of worrying about how to update variables, instead the developer can wri
 
 Solutions such as [`RxJs`](0) already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated
 
+[RxJs](https://github.com/Reactive-Extensions/RxJS)
+
+--
+
+### Back to Elm
+
+An example with RxJS:
+
 ```javascript
 var source = getAsyncStockData();
 
@@ -130,19 +138,12 @@ var subscription = source
 subscription.dispose();
 
 ```
-
-[RxJs](https://github.com/Reactive-Extensions/RxJS)
-
---
-
-### Back to Elm
-
 The previous example in Elm looks like this
 
 ```haskell
-moreThan30 = List.filter (\x -> x.price > 30)
+moreThan30 = List.filter (\quote -> quote.price > 30)
 logItem v = log "Prices higher than $40: $"
-Signal.map (moreThan30 >> List.map v) getStockData
+Signal.map (moreThan30 >> List.map logItem) getStockData
 
 ```
 
@@ -152,7 +153,7 @@ Signal.map (moreThan30 >> List.map v) getStockData
 
 Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -
 
-```
+```haskell
 Signal.map : (a -> b) -> Signal a -> Signal b
 ```
 
@@ -174,8 +175,8 @@ Elm therefore is very exciting to developers.
 ### Sounds great, what's wrong with it?
 
 My paper aims to:
-
  * compare Elm to existing frameworks for simplifying web-based applications
+ * examine the structure of an Elm application
  * examine why Elm has yet to see wide adoption
  * highlight potential steps for increasing production adoption
 
@@ -183,7 +184,7 @@ My paper aims to:
 
 ### What are the current alternatives?
 
-Picking alternatives in the Javascript community is never an easy thing. 
+Picking alternatives in the web development community is never an easy thing. 
 
 There is a common joke of "x days since a new Javascript framework has been released". 
 
@@ -198,6 +199,30 @@ There's even a website [dedicated](http://www.isaacchansky.me/days-since-last-ne
 --
 
 ### Javascript alternatives
+
+
 There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js
 
+#### Angular
+
+Structured around controlling everything through JS.
+
+#### React
+
+Structured around limiting the scope of a section of HTML.
+
+-- 
+
+### Haskell alternatives
+
 There's also many "compile to Javascript" languages out there. We'll be looking at Haskell-based alternatives such as Fay and GHC.js.
+
+#### Fay
+
+Fay is a Haskell subset which exposes a FFI which allows the developer to run any JS code with backing from Haskell's type system
+
+#### GHC.js
+
+GHC.js is a Haskell subset with a library for creating HTML elements
+
+--

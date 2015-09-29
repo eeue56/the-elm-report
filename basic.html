@@ -402,6 +402,10 @@ pre .chunk {
 li {
     margin-top: 15px !important;
 }
+
+p {
+    margin-top: 35px !important;
+}
   </style>
 </head>
 <body>
@@ -487,6 +491,12 @@ In a non-reactive language, you can model changes in time through a couple of di
   <div class="slide hidden" id="slide-12">
     <section class="slide-content"><h3 id="javascript-solutions">Javascript solutions</h3>
 <p>Solutions such as <a href="0"><code>RxJs</code></a> already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated</p>
+<p><a href="https://github.com/Reactive-Extensions/RxJS">RxJs</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="back-to-elm">Back to Elm</h3>
+<p>An example with RxJS:</p>
 <pre><code class="lang-javascript"><span class="keyword">var</span> source = getAsyncStockData();
 
 <span class="keyword">var</span> subscription = source
@@ -504,21 +514,16 @@ In a non-reactive language, you can model changes in time through a couple of di
       console.log(<span class="string">'Something went wrong: '</span> + err.message);
     });
 subscription.dispose();</code></pre>
-<p><a href="https://github.com/Reactive-Extensions/RxJS">RxJs</a></p>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-13">
-    <section class="slide-content"><h3 id="back-to-elm">Back to Elm</h3>
 <p>The previous example in Elm looks like this</p>
-<pre><code class="lang-haskell"><span class="title">moreThan30</span> = <span class="type">List</span>.filter (\x -&gt; x.price &gt; <span class="number">30</span>)
+<pre><code class="lang-haskell"><span class="title">moreThan30</span> = <span class="type">List</span>.filter (\quote -&gt; quote.price &gt; <span class="number">30</span>)
 <span class="title">logItem</span> v = log <span class="string">"Prices higher than $40: $"</span>
-<span class="type">Signal</span>.map (moreThan30 &gt;&gt; <span class="type">List</span>.map v) getStockData</code></pre>
+<span class="type">Signal</span>.map (moreThan30 &gt;&gt; <span class="type">List</span>.map logItem) getStockData</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-14">
     <section class="slide-content"><h3 id="it-s-neater-right-">It&#39;s neater, right?</h3>
 <p>Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -</p>
-<pre><code>Signal.map : (a -&gt; b) -&gt; Signal a -&gt; Signal b</code></pre>
+<pre><code class="lang-haskell"><span class="type">Signal</span>.map : (a -&gt; b) -&gt; <span class="type">Signal</span> a -&gt; <span class="type">Signal</span> b</code></pre>
 <p>Signal.map applies functions to data contained within a Signal.</p>
 </section>
   </div>
@@ -534,6 +539,7 @@ subscription.dispose();</code></pre>
 <p>My paper aims to:</p>
 <ul>
 <li>compare Elm to existing frameworks for simplifying web-based applications</li>
+<li>examine the structure of an Elm application</li>
 <li>examine why Elm has yet to see wide adoption</li>
 <li>highlight potential steps for increasing production adoption</li>
 </ul>
@@ -541,7 +547,7 @@ subscription.dispose();</code></pre>
   </div>
   <div class="slide hidden" id="slide-17">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
-<p>Picking alternatives in the Javascript community is never an easy thing. </p>
+<p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
@@ -554,10 +560,25 @@ subscription.dispose();</code></pre>
   <div class="slide hidden" id="slide-19">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
-<p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
+<h4 id="angular">Angular</h4>
+<p>Structured around controlling everything through JS.</p>
+<h4 id="react">React</h4>
+<p>Structured around limiting the scope of a section of HTML.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-20">
+  <div class="slide hidden  " id="slide-20">
+    <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
+<p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
+<h4 id="fay">Fay</h4>
+<p>Fay is a Haskell subset which exposes a FFI which allows the developer to run any JS code with backing from Haskell&#39;s type system</p>
+<h4 id="ghc-js">GHC.js</h4>
+<p>GHC.js is a Haskell subset with a library for creating HTML elements</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"></section>
+  </div>
+  <div class="slide hidden" id="slide-22">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
