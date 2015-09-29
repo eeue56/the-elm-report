@@ -25,7 +25,9 @@ Elm is..
 
 ### What exactly is FRP?
 
-FRP is a way of modelling values that change over time. Rather than representing changes by manually updating some variable to store the value, instead FRP works on the principle of using functional-style maps, folds and filters to express code that can be deemed reactive to some value
+Functional reactive programming (FRP) is a way of modelling values that change over time. 
+
+Rather than representing changes by manually updating some variable to store the value, instead FRP works on the principle of using functional-style maps, folds and filters to express code that can be deemed reactive to some value
 
 --
 
@@ -102,5 +104,26 @@ logItem v = log "Prices higher than $40: $"
 Signal.map (moreThan30 >> List.map v) getStockData
 
 ```
+
+--
+
+### It's neater, right?
+
+Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -
+
+```
+Signal.map : (a -> b) -> Signal a -> Signal b
+```
+
+Signal.map applies functions to data contained within a Signal.
+
+
+--
+
+### The use of functors
+
+Elm enables the developer to write their functions ignoring how signals work internally. 
+
+This enables them to express a program at higher level of abstraction, simplifying both the writing and reading of code.
 
 Elm therefore is very exciting to developers.

@@ -422,7 +422,8 @@ pre .chunk {
   </div>
   <div class="slide hidden" id="slide-3">
     <section class="slide-content"><h3 id="what-exactly-is-frp-">What exactly is FRP?</h3>
-<p>FRP is a way of modelling values that change over time. Rather than representing changes by manually updating some variable to store the value, instead FRP works on the principle of using functional-style maps, folds and filters to express code that can be deemed reactive to some value</p>
+<p>Functional reactive programming (FRP) is a way of modelling values that change over time. </p>
+<p>Rather than representing changes by manually updating some variable to store the value, instead FRP works on the principle of using functional-style maps, folds and filters to express code that can be deemed reactive to some value</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-4">
@@ -474,10 +475,23 @@ subscription.dispose();</code></pre>
 <pre><code>moreThan30 = List.filter (\x -&gt; x.price &gt; 30)
 logItem v = log &quot;Prices higher than $40: $&quot;
 Signal.map (moreThan30 &gt;&gt; List.map v) getStockData</code></pre>
-<p>Elm therefore is very exciting to developers.</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-8">
+    <section class="slide-content"><h3 id="it-s-neater-right-">It&#39;s neater, right?</h3>
+<p>Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -</p>
+<pre><code>Signal.map : (a -&gt; b) -&gt; Signal a -&gt; Signal b</code></pre>
+<p>Signal.map applies functions to data contained within a Signal.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h3 id="the-use-of-functors">The use of functors</h3>
+<p>Elm enables the developer to write their functions ignoring how signals work internally. </p>
+<p>This enables them to express a program at higher level of abstraction, simplifying both the writing and reading of code.</p>
+<p>Elm therefore is very exciting to developers.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-10">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
