@@ -398,6 +398,10 @@ pre .chunk {
     margin-top : 20px !important;
     overflow: visible !important;
 }
+
+li {
+    margin-top: 15px !important;
+}
   </style>
 </head>
 <body>
@@ -411,8 +415,26 @@ pre .chunk {
 </section>
   </div>
   <div class="slide hidden" id="slide-2">
-    <section class="slide-content"><h3 id="intro-to-elm">Intro to Elm</h3>
-<p>Elm is..</p>
+    <section class="slide-content"><h3 id="web-development-as-of-2015">Web development as of 2015</h3>
+<p>Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. </p>
+<p>There is little agreement across these different developer groups</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><p><img src="http://www.doxdesk.com/img/updates/20091116-so-large.gif" alt="use Jquery"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h3 id="so-what-s-this-all-about-">So what&#39;s this all about?</h3>
+<p>This paper is going to look at a small section of the web development world. In particular, we are going to look at Elm and how some of the concepts in Elm aim to solve some of the issues with modern Javascript.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h1 id="intro-to-elm">Intro to Elm</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
+    <section class="slide-content"><h3 id="elm-is-">Elm is..</h3>
 <ul>
 <li>designed around FRP</li>
 <li>inspired heavily by Haskell</li>
@@ -420,78 +442,122 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-3">
+  <div class="slide hidden" id="slide-7">
+    <section class="slide-content"><h3 id="who-does-elm-appeal-to-">Who does Elm appeal to?</h3>
+<p>Elm appeals to three main markets: </p>
+<ul>
+<li>Those who use Haskell</li>
+<li>Those who use React</li>
+<li>Those who enjoy learning languages</li>
+</ul>
+<p>Elm provides a framework similar to React, in a language similar to Haskell.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-8">
+    <section class="slide-content"><h1 id="functional-reactive-programming-frp-">Functional Reactive Programming (FRP)</h1>
+<h2 id="a-new-way-to-write-interactive-code">A new way to write interactive code</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
     <section class="slide-content"><h3 id="what-exactly-is-frp-">What exactly is FRP?</h3>
 <p>Functional reactive programming (FRP) is a way of modelling values that change over time. </p>
 <p>Rather than representing changes by manually updating some variable to store the value, instead FRP works on the principle of using functional-style maps, folds and filters to express code that can be deemed reactive to some value</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-4">
+  <div class="slide hidden" id="slide-10">
     <section class="slide-content"><h3 id="frp-example">FRP example</h3>
 <p>The current time is a perfect example of FRP.
 In a non-reactive language, you can model changes in time through a couple of different ways -</p>
-<pre><code>    while True:
+<pre><code class="lang-python">    <span class="keyword">while</span> <span class="built_in">True</span>:
         current_time = datetime.now()
-        time.sleep(1000)</code></pre>
-<pre><code>    setInterval(function({
-        currentTime = (new Date()).getHours();
-    }), 1000);</code></pre>
+        time.sleep(<span class="number">1000</span>)</code></pre>
+<pre><code class="lang-javascript">    setInterval(<span class="keyword">function</span>({
+        currentTime = (<span class="keyword">new</span> Date()).getHours();
+    }), <span class="number">1000</span>);</code></pre>
 <p>whereas in an FRP based language, you would instead do -</p>
-<pre><code>    Signal.map timeView (every second)</code></pre>
+<pre><code class="lang-haskell">    <span class="type">Signal</span>.map timeView (every second)</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-5">
+  <div class="slide hidden" id="slide-11">
     <section class="slide-content"><h3 id="why-are-people-excited-about-frp-">Why are people excited about FRP?</h3>
 <p>FRP provides a way of modelling programs without the need for callback hell, simplifying the code base. </p>
 <p>Instead of worrying about how to update variables, instead the developer can write code focusing on how the variable should be used.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-6">
+  <div class="slide hidden" id="slide-12">
     <section class="slide-content"><h3 id="javascript-solutions">Javascript solutions</h3>
 <p>Solutions such as <a href="0"><code>RxJs</code></a> already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated</p>
-<pre><code>var source = getAsyncStockData();
+<pre><code class="lang-javascript"><span class="keyword">var</span> source = getAsyncStockData();
 
-var subscription = source
-  .filter(function (quote) {
-    return quote.price &gt; 30;
+<span class="keyword">var</span> subscription = source
+  .filter(<span class="function"><span class="keyword">function</span> <span class="params">(quote)</span> {</span>
+    <span class="keyword">return</span> quote.price &gt; <span class="number">30</span>;
   })
-  .map(function (quote) {
-    return quote.price;
+  .map(<span class="function"><span class="keyword">function</span> <span class="params">(quote)</span> {</span>
+    <span class="keyword">return</span> quote.price;
   })
   .subscribe(
-    function (price) {
-      console.log(&#39;Prices higher than $30: $&#39; + price);
+    <span class="function"><span class="keyword">function</span> <span class="params">(price)</span> {</span>
+      console.log(<span class="string">'Prices higher than $30: $'</span> + price);
     },
-    function (err) {
-      console.log(&#39;Something went wrong: &#39; + err.message);
+    <span class="function"><span class="keyword">function</span> <span class="params">(err)</span> {</span>
+      console.log(<span class="string">'Something went wrong: '</span> + err.message);
     });
 subscription.dispose();</code></pre>
 <p><a href="https://github.com/Reactive-Extensions/RxJS">RxJs</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-7">
+  <div class="slide hidden" id="slide-13">
     <section class="slide-content"><h3 id="back-to-elm">Back to Elm</h3>
 <p>The previous example in Elm looks like this</p>
-<pre><code>moreThan30 = List.filter (\x -&gt; x.price &gt; 30)
-logItem v = log &quot;Prices higher than $40: $&quot;
-Signal.map (moreThan30 &gt;&gt; List.map v) getStockData</code></pre>
+<pre><code class="lang-haskell"><span class="title">moreThan30</span> = <span class="type">List</span>.filter (\x -&gt; x.price &gt; <span class="number">30</span>)
+<span class="title">logItem</span> v = log <span class="string">"Prices higher than $40: $"</span>
+<span class="type">Signal</span>.map (moreThan30 &gt;&gt; <span class="type">List</span>.map v) getStockData</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-8">
+  <div class="slide hidden" id="slide-14">
     <section class="slide-content"><h3 id="it-s-neater-right-">It&#39;s neater, right?</h3>
 <p>Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -</p>
 <pre><code>Signal.map : (a -&gt; b) -&gt; Signal a -&gt; Signal b</code></pre>
 <p>Signal.map applies functions to data contained within a Signal.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-9">
+  <div class="slide hidden" id="slide-15">
     <section class="slide-content"><h3 id="the-use-of-functors">The use of functors</h3>
 <p>Elm enables the developer to write their functions ignoring how signals work internally. </p>
 <p>This enables them to express a program at higher level of abstraction, simplifying both the writing and reading of code.</p>
 <p>Elm therefore is very exciting to developers.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-10">
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h3 id="sounds-great-what-s-wrong-with-it-">Sounds great, what&#39;s wrong with it?</h3>
+<p>My paper aims to:</p>
+<ul>
+<li>compare Elm to existing frameworks for simplifying web-based applications</li>
+<li>examine why Elm has yet to see wide adoption</li>
+<li>highlight potential steps for increasing production adoption</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
+<p>Picking alternatives in the Javascript community is never an easy thing. </p>
+<p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
+<p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
+<p><img src="images/days_since_js_framework.png" width="100%"></img></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
+<p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
+<p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-20">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">

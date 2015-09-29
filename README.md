@@ -12,14 +12,55 @@ controls: true
 # The Elm Report
 ## The state of Elm in the modern web development world
 
+
 --
 
-### Intro to Elm
-Elm is..
+### Web development as of 2015
+
+Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. 
+
+
+There is little agreement across these different developer groups
+
+
+--
+
+![use Jquery](http://www.doxdesk.com/img/updates/20091116-so-large.gif)
+--
+
+### So what's this all about?
+
+
+This paper is going to look at a small section of the web development world. In particular, we are going to look at Elm and how some of the concepts in Elm aim to solve some of the issues with modern Javascript.
+
+--
+
+# Intro to Elm
+
+--
+
+### Elm is..
 
  * designed around FRP
  * inspired heavily by Haskell
  * HTML implementation inspired by React
+
+--
+
+### Who does Elm appeal to?
+
+Elm appeals to three main markets: 
+ * Those who use Haskell
+ * Those who use React
+ * Those who enjoy learning languages
+
+Elm provides a framework similar to React, in a language similar to Haskell.
+
+--
+
+# Functional Reactive Programming (FRP)
+
+## A new way to write interactive code
 
 --
 
@@ -37,13 +78,13 @@ Rather than representing changes by manually updating some variable to store the
 The current time is a perfect example of FRP.
 In a non-reactive language, you can model changes in time through a couple of different ways -
 
-```
+```python
     while True:
         current_time = datetime.now()
         time.sleep(1000)
 ``` 
 
-```
+```javascript
     setInterval(function({
         currentTime = (new Date()).getHours();
     }), 1000);
@@ -51,7 +92,7 @@ In a non-reactive language, you can model changes in time through a couple of di
 
 whereas in an FRP based language, you would instead do -
 
-```
+```haskell
     Signal.map timeView (every second)
 ```
 
@@ -69,7 +110,7 @@ Instead of worrying about how to update variables, instead the developer can wri
 
 Solutions such as [`RxJs`](0) already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated
 
-```
+```javascript
 var source = getAsyncStockData();
 
 var subscription = source
@@ -98,7 +139,7 @@ subscription.dispose();
 
 The previous example in Elm looks like this
 
-```
+```haskell
 moreThan30 = List.filter (\x -> x.price > 30)
 logItem v = log "Prices higher than $40: $"
 Signal.map (moreThan30 >> List.map v) getStockData
@@ -127,3 +168,36 @@ Elm enables the developer to write their functions ignoring how signals work int
 This enables them to express a program at higher level of abstraction, simplifying both the writing and reading of code.
 
 Elm therefore is very exciting to developers.
+
+--
+
+### Sounds great, what's wrong with it?
+
+My paper aims to:
+
+ * compare Elm to existing frameworks for simplifying web-based applications
+ * examine why Elm has yet to see wide adoption
+ * highlight potential steps for increasing production adoption
+
+--
+
+### What are the current alternatives?
+
+Picking alternatives in the Javascript community is never an easy thing. 
+
+There is a common joke of "x days since a new Javascript framework has been released". 
+
+There's even a website [dedicated](http://www.isaacchansky.me/days-since-last-new-js-framework/) to it.
+--
+
+## js framework jokes
+
+<img src="images/days_since_js_framework.png" width="100%"></img>
+
+
+--
+
+### Javascript alternatives
+There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js
+
+There's also many "compile to Javascript" languages out there. We'll be looking at Haskell-based alternatives such as Fay and GHC.js.
