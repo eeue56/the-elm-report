@@ -144,8 +144,8 @@ The previous example in Elm looks like this
 
 ```haskell
 moreThan30 = List.filter (\quote -> quote.price > 30)
-logItem v = log "Prices higher than $40: $"
-Signal.map (moreThan30 >> List.map logItem) getStockData
+logItem v = log "Prices higher than $30: $"
+Signal.map (moreThan30 >> List.map logItem) getAsyncStockData
 
 ```
 
@@ -294,9 +294,77 @@ type Command =
   Start (Maybe Game)
 ```
 
-`Command` here is our `Action` type. It has seven possible interactions. Just seven, abstract forms of interaction. Everything we can do which will change the model of the application falls into one of these types.
+`Command` here is our `Action` type. It has seven possible interactions. Just seven, abstract forms of interaction. 
+
+Everything we can do which will change the model of the application falls into one of these types.
+
+
 
 taken from [Froggy example](https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm)
+--
+
+### vs traditional Javascript
+
+There are no `x.addEventListeners` in Elm. If you want to know what happens, look at the `Action` and `update` function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.
+
+This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.
+
+
+--
+
+### Type system
+
+Elm is a static, strongly typed language, very similar to Haskell. If types don't match at compile-time, the developer will get an error.
+
+```haskell
+
+The right argument of (+) is causing a type mismatch.
+
+3| f = d + "hello"
+As I infer the type of values flowing through your program, I see a conflict
+between these two types:
+
+    number
+
+    String
+
+```
+
+--
+
+### Abstract Data Types
+
+Abstract data types are the thing that makes the `type Action = Something | Nothing` possible. 
+
+Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.
+
+
+--
+
+### Real world ADTs
+
+The following example is from [Stalk](https://github.com/eeue56/stalk/), a language with a built-in IDE written in Elm
+
+```haskell
+update : Action -> Program -> Program
+update action program = 
+  case action of 
+    UpdateText x -> { program | enteredText <- x, steps <- 0 } 
+    Enter -> { program | model <- programRunner program.enteredText program.model }
+    Reset -> { program | model <- runCommand 0 (Clear, 0) program.model, steps <- 0 }
+    Step ->
+      case String.split "\n" program.enteredText of
+        [] -> program
+        x::xs ->
+          let 
+            program' = { program | model <- programRunner x program.model }
+          in 
+            { program' | enteredText <- String.join "\n" xs, steps <- program'.steps + 1 }
+    Noop -> program
+```
+
+The use of `case..of` here is called _pattern matching_. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.
+
 --
 
 ### What are the current alternatives?
