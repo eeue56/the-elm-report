@@ -184,6 +184,10 @@ My paper aims to:
 
 --
 
+# Structure of Elm apps
+
+--
+
 ### The Elm Architecture
 
 Elm has a defined architecture that all Elm apps follow:
@@ -200,6 +204,10 @@ Generates a visualization of your data in the model
 
 Updates your model based off the current input Signal
 
+#### Update cycle
+ * on signal change, map update function with signal value and model
+ * store changes made to model in model
+ * pass updated model to view function
 
 --
 
@@ -251,6 +259,7 @@ Picking alternatives in the web development community is never an easy thing.
 There is a common joke of "x days since a new Javascript framework has been released". 
 
 There's even a website [dedicated](http://www.isaacchansky.me/days-since-last-new-js-framework/) to it.
+
 --
 
 ## js framework jokes
@@ -285,6 +294,6 @@ Fay is a Haskell subset which exposes a FFI which allows the developer to run an
 
 #### GHC.js
 
-GHC.js is a Haskell subset with a library for creating HTML elements
+GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.
 
 --

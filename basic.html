@@ -548,6 +548,10 @@ subscription.dispose();</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h1 id="structure-of-elm-apps">Structure of Elm apps</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
     <section class="slide-content"><h3 id="the-elm-architecture">The Elm Architecture</h3>
 <p>Elm has a defined architecture that all Elm apps follow:</p>
 <h5 id="model">Model</h5>
@@ -556,9 +560,15 @@ subscription.dispose();</code></pre>
 <p>Generates a visualization of your data in the model</p>
 <h5 id="update">Update</h5>
 <p>Updates your model based off the current input Signal</p>
+<h4 id="update-cycle">Update cycle</h4>
+<ul>
+<li>on signal change, map update function with signal value and model</li>
+<li>store changes made to model in model</li>
+<li>pass updated model to view function</li>
+</ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-18">
+  <div class="slide hidden" id="slide-19">
     <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
 <pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
 <span class="import"><span class="keyword">import</span> Html.Events exposing <span class="container">(<span class="title">onClick</span>)</span></span>
@@ -594,19 +604,19 @@ subscription.dispose();</code></pre>
 <p><div id="example"></div></p>
 <script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script></section>
   </div>
-  <div class="slide hidden" id="slide-19">
+  <div class="slide hidden" id="slide-20">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-20">
+  <div class="slide hidden" id="slide-21">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-21">
+  <div class="slide hidden" id="slide-22">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -615,19 +625,19 @@ subscription.dispose();</code></pre>
 <p>Structured around limiting the scope of a section of HTML.</p>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-22">
+  <div class="slide hidden  " id="slide-23">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
 <p>Fay is a Haskell subset which exposes a FFI which allows the developer to run any JS code with backing from Haskell&#39;s type system</p>
 <h4 id="ghc-js">GHC.js</h4>
-<p>GHC.js is a Haskell subset with a library for creating HTML elements</p>
+<p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-23">
+  <div class="slide hidden" id="slide-24">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-24">
+  <div class="slide hidden" id="slide-25">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
