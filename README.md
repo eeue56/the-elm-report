@@ -390,12 +390,14 @@ There's even a website [dedicated](http://www.isaacchansky.me/days-since-last-ne
 There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js
 
 #### Angular
+ * Uses dirty checking for updating variables
+ * Many different ways of doing things - services, 
 
-Structured around controlling everything through JS.
+#### React/Flux
 
-#### React
-
-Structured around limiting the scope of a section of HTML.
+ * Virtual DOM for rendering speed
+ * DSL (JSX) for writing HTML contained within Javascript objects
+ * Limit scope of each "component" of your page
 
 -- 
 
@@ -410,5 +412,11 @@ Fay is a Haskell subset which exposes a FFI which allows the developer to run an
 #### GHC.js
 
 GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.
+
+--
+
+### 
+
+
 
 --
