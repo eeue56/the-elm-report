@@ -25,7 +25,7 @@ view address model = div []
     , button [ onClick address Decrement ] [ text "-" ]
     ]
 
-
+model' : Signal.Signal Model
 model' = Signal.foldp update model currentClick.signal
 
 main = Signal.map (view currentClick.address) model'

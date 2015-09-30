@@ -204,11 +204,6 @@ Generates a visualization of your data in the model
 
 Updates your model based off the current input Signal
 
-#### Update cycle
- * on signal change, map update function with signal value and model
- * store changes made to model in model
- * pass updated model to view function
-
 --
 
 ### What does this look like?
@@ -241,6 +236,7 @@ view address model =
         , button [ onClick address Decrement ] [ text "-" ] 
         ]
 
+model' : Signal.Signal Model
 model' = Signal.foldp update model currentClick.signal
 
 main = Signal.map (view currentClick.address) model'
@@ -250,6 +246,57 @@ makes:
 <div id="example"></div>
 <script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script>
 
+--
+
+### How it works
+
+Elm follows what we call an model-view-update (MVU) cycle. 
+
+Each change in a mapped signal makes the update cycle happen. 
+
+#### Update cycle
+ * on signal change, map update function with signal value and model
+ * store changes made to model in model
+ * pass updated model to view function
+
+--
+
+### Even more how it works
+
+Each `update` function has a type signature along the lines of
+
+```haskell
+update : Action -> Model -> Model
+```
+
+`Actions` are a way of representing the things that happen in your application at a high level.
+
+For example, in our previous example we only had three `Actions`
+
+```haskell
+type Action = Increment | Decrement | None
+``` 
+
+_By looking at the definition of an Action, we can tell what our application can do_
+
+--
+
+### Action example
+
+Let's look at someone else's source code.
+```haskell
+type Command =
+  Nop |
+  MoveBy Grid.Position |
+  MoveTo Leaf |
+  Continue |
+  RestartLevel |
+  Start (Maybe Game)
+```
+
+`Command` here is our `Action` type. It has seven possible interactions. Just seven, abstract forms of interaction. Everything we can do which will change the model of the application falls into one of these types.
+
+taken from [Froggy example](https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm)
 --
 
 ### What are the current alternatives?

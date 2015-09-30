@@ -560,12 +560,6 @@ subscription.dispose();</code></pre>
 <p>Generates a visualization of your data in the model</p>
 <h5 id="update">Update</h5>
 <p>Updates your model based off the current input Signal</p>
-<h4 id="update-cycle">Update cycle</h4>
-<ul>
-<li>on signal change, map update function with signal value and model</li>
-<li>store changes made to model in model</li>
-<li>pass updated model to view function</li>
-</ul>
 </section>
   </div>
   <div class="slide hidden" id="slide-19">
@@ -597,6 +591,7 @@ subscription.dispose();</code></pre>
         , button [ onClick address <span class="type">Decrement</span> ] [ text <span class="string">"-"</span> ] 
         ]
 
+<span class="title">model'</span> : <span class="type">Signal</span>.<span class="type">Signal</span> <span class="type">Model</span>
 <span class="title">model'</span> = <span class="type">Signal</span>.foldp update model currentClick.signal
 
 <span class="title">main</span> = <span class="type">Signal</span>.map (view currentClick.address) model'</code></pre>
@@ -605,18 +600,54 @@ subscription.dispose();</code></pre>
 <script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script></section>
   </div>
   <div class="slide hidden" id="slide-20">
+    <section class="slide-content"><h3 id="how-it-works">How it works</h3>
+<p>Elm follows what we call an model-view-update (MVU) cycle. </p>
+<p>Each change in a mapped signal makes the update cycle happen. </p>
+<h4 id="update-cycle">Update cycle</h4>
+<ul>
+<li>on signal change, map update function with signal value and model</li>
+<li>store changes made to model in model</li>
+<li>pass updated model to view function</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"><h3 id="even-more-how-it-works">Even more how it works</h3>
+<p>Each <code>update</code> function has a type signature along the lines of</p>
+<pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Model</span> -&gt; <span class="type">Model</span></code></pre>
+<p><code>Actions</code> are a way of representing the things that happen in your application at a high level.</p>
+<p>For example, in our previous example we only had three <code>Actions</code></p>
+<pre><code class="lang-haskell"><span class="typedef"><span class="keyword">type</span> <span class="type">Action</span> = <span class="type">Increment</span> | <span class="type">Decrement</span> | <span class="type">None</span></span></code></pre>
+<p><em>By looking at the definition of an Action, we can tell what our application can do</em></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-22">
+    <section class="slide-content"><h3 id="action-example">Action example</h3>
+<p>Let&#39;s look at someone else&#39;s source code.</p>
+<pre><code class="lang-haskell"><span class="typedef"><span class="keyword">type</span> <span class="type">Command</span> =</span>
+  <span class="type">Nop</span> |
+  <span class="type">MoveBy</span> <span class="type">Grid</span>.<span class="type">Position</span> |
+  <span class="type">MoveTo</span> <span class="type">Leaf</span> |
+  <span class="type">Continue</span> |
+  <span class="type">RestartLevel</span> |
+  <span class="type">Start</span> (<span class="type">Maybe</span> <span class="type">Game</span>)</code></pre>
+<p><code>Command</code> here is our <code>Action</code> type. It has seven possible interactions. Just seven, abstract forms of interaction. Everything we can do which will change the model of the application falls into one of these types.</p>
+<p>taken from <a href="https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm">Froggy example</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-23">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-21">
+  <div class="slide hidden" id="slide-24">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-22">
+  <div class="slide hidden" id="slide-25">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -625,7 +656,7 @@ subscription.dispose();</code></pre>
 <p>Structured around limiting the scope of a section of HTML.</p>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-23">
+  <div class="slide hidden  " id="slide-26">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -634,10 +665,10 @@ subscription.dispose();</code></pre>
 <p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-24">
+  <div class="slide hidden" id="slide-27">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-25">
+  <div class="slide hidden" id="slide-28">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
