@@ -301,11 +301,38 @@ Everything we can do which will change the model of the application falls into o
 
 
 taken from [Froggy example](https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm)
+
+-- 
+
+### vs React
+
+Compare this is a render function taken from _one_ component in React -
+
+```javascript
+ render: function() {
+    return (
+      <div>
+        <h1>Top ten companies with Attendees</h1>
+        <TopTen ten={this.state.top}></TopTen>
+        <div className="Chart" ></div>
+        <h1>Proportion of Attendees grouped by number of events</h1>
+        <RadioButtons init_value={this.state.value} onChange={this.onValueChanged}/>
+        <h2>Select Time Range</h2>
+        <Demo orientation='horizontal' defaultValue= {[0,1747]} max = {1747} changeHandler={this.onSliderChanged} />
+        <p>Start Date:{this.state.dates[0]}</p>
+        <p>End Date:{this.state.dates[1]}</p>
+        <p>N of {this.state.value=='company' ? 'Companies' : 'Individuals' } attending in this timeframe:</p>
+      </div>
+    );
+```
+
+Can you tell how many types of interaction there are? Can you tell what they do?
+
 --
 
 ### vs traditional Javascript
 
-There are no `x.addEventListeners` in Elm. If you want to know what happens, look at the `Action` and `update` function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.
+There are no `x.addEventListeners` in Elm. <sup>not actually true</sup> If you want to know what happens, look at the `Action` and `update` function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.
 
 This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.
 

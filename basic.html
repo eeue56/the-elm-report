@@ -406,6 +406,10 @@ li {
 p {
     margin-top: 35px !important;
 }
+
+sup {
+    font-size : 20px !important;
+}
   </style>
 </head>
 <body>
@@ -636,13 +640,34 @@ subscription.dispose();</code></pre>
 <p>taken from <a href="https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm">Froggy example</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-23">
-    <section class="slide-content"><h3 id="vs-traditional-javascript">vs traditional Javascript</h3>
-<p>There are no <code>x.addEventListeners</code> in Elm. If you want to know what happens, look at the <code>Action</code> and <code>update</code> function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.</p>
-<p>This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.</p>
+  <div class="slide hidden  " id="slide-23">
+    <section class="slide-content"><h3 id="vs-react">vs React</h3>
+<p>Compare this is a render function taken from <em>one</em> component in React -</p>
+<pre><code class="lang-javascript"> render: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> (
+      <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Top ten companies with Attendees<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">TopTen</span> <span class="attribute">ten</span>=<span class="value">{this.state.top}</span>&gt;</span><span class="tag">&lt;/<span class="title">TopTen</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">className</span>=<span class="value">"Chart"</span> &gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Proportion of Attendees grouped by number of events<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">RadioButtons</span> <span class="attribute">init_value</span>=<span class="value">{this.state.value}</span> <span class="attribute">onChange</span>=<span class="value">{this.onValueChanged}</span>/&gt;</span>
+        <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Select Time Range<span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">Demo</span> <span class="attribute">orientation</span>=<span class="value">'horizontal'</span> <span class="attribute">defaultValue</span>= {[<span class="attribute">0</span>,<span class="attribute">1747</span>]} <span class="attribute">max</span> = {<span class="attribute">1747</span>} <span class="attribute">changeHandler</span>=<span class="value">{this.onSliderChanged}</span> /&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>Start Date:{this.state.dates[0]}<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>End Date:{this.state.dates[1]}<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>N of {this.state.value=='company' ? 'Companies' : 'Individuals' } attending in this timeframe:<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    );</span></code></pre>
+<p>Can you tell how many types of interaction there are? Can you tell what they do?</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-24">
+    <section class="slide-content"><h3 id="vs-traditional-javascript">vs traditional Javascript</h3>
+<p>There are no <code>x.addEventListeners</code> in Elm. <sup>not actually true</sup> If you want to know what happens, look at the <code>Action</code> and <code>update</code> function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.</p>
+<p>This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
     <section class="slide-content"><h3 id="type-system">Type system</h3>
 <p>Elm is a static, strongly typed language, very similar to Haskell. If types don&#39;t match at compile-time, the developer will get an error.</p>
 <pre><code class="lang-haskell">
@@ -657,13 +682,13 @@ subscription.dispose();</code></pre>
     <span class="type">String</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-25">
+  <div class="slide hidden" id="slide-26">
     <section class="slide-content"><h3 id="abstract-data-types">Abstract Data Types</h3>
 <p>Abstract data types are the thing that makes the <code>type Action = Something | Nothing</code> possible. </p>
 <p>Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-26">
+  <div class="slide hidden" id="slide-27">
     <section class="slide-content"><h3 id="real-world-adts">Real world ADTs</h3>
 <p>The following example is from <a href="https://github.com/eeue56/stalk/">Stalk</a>, a language with a built-in IDE written in Elm</p>
 <pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Program</span> -&gt; <span class="type">Program</span>
@@ -684,19 +709,19 @@ subscription.dispose();</code></pre>
 <p>The use of <code>case..of</code> here is called <em>pattern matching</em>. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-27">
+  <div class="slide hidden" id="slide-28">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-28">
+  <div class="slide hidden" id="slide-29">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-29">
+  <div class="slide hidden" id="slide-30">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -712,7 +737,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-30">
+  <div class="slide hidden  " id="slide-31">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -721,14 +746,14 @@ subscription.dispose();</code></pre>
 <p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-31">
+  <div class="slide hidden" id="slide-32">
     <section class="slide-content"><h2 id="-">#</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-32">
+  <div class="slide hidden" id="slide-33">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-33">
+  <div class="slide hidden" id="slide-34">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
