@@ -9,6 +9,8 @@ controls: true
 
 --
 
+<script src="elm/basic/elm.js"></script>
+
 # The Elm Report
 ## The state of Elm in the modern web development world
 
@@ -179,6 +181,66 @@ My paper aims to:
  * examine the structure of an Elm application
  * examine why Elm has yet to see wide adoption
  * highlight potential steps for increasing production adoption
+
+--
+
+### The Elm Architecture
+
+Elm has a defined architecture that all Elm apps follow:
+
+##### Model
+
+Stores the data in your application
+
+##### View
+
+Generates a visualization of your data in the model
+
+##### Update
+
+Updates your model based off the current input Signal
+
+
+--
+
+### What does this look like?
+
+```haskell
+import Html exposing (div, button, text)
+import Html.Events exposing (onClick)
+
+type Action = Increment | Decrement | None
+type alias Model = Int
+
+model : Model
+model = 0
+
+currentClick : Signal.Mailbox Action
+currentClick = Signal.mailbox None
+
+update : Action -> Model -> Model
+update action model =
+    case action of
+        Increment -> model + 1
+        Decrement -> model - 1
+        None -> model
+
+view : Signal.Address Action -> Model -> Html.Html
+view address model = 
+    div []
+        [ button [ onClick address Increment ] [ text "+" ]
+        , div [] [ text (toString model) ]
+        , button [ onClick address Decrement ] [ text "-" ] 
+        ]
+
+model' = Signal.foldp update model currentClick.signal
+
+main = Signal.map (view currentClick.address) model'
+```
+
+makes: 
+<div id="example"></div>
+<script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script>
 
 --
 

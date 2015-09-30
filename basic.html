@@ -414,7 +414,9 @@ p {
   </div>
 
   <div class="slide" id="slide-1">
-    <section class="slide-content"><h1 id="the-elm-report">The Elm Report</h1>
+    <section class="slide-content"><script src="elm/basic/elm.js"></script>
+
+<h1 id="the-elm-report">The Elm Report</h1>
 <h2 id="the-state-of-elm-in-the-modern-web-development-world">The state of Elm in the modern web development world</h2>
 </section>
   </div>
@@ -546,18 +548,65 @@ subscription.dispose();</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h3 id="the-elm-architecture">The Elm Architecture</h3>
+<p>Elm has a defined architecture that all Elm apps follow:</p>
+<h5 id="model">Model</h5>
+<p>Stores the data in your application</p>
+<h5 id="view">View</h5>
+<p>Generates a visualization of your data in the model</p>
+<h5 id="update">Update</h5>
+<p>Updates your model based off the current input Signal</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
+<pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
+<span class="import"><span class="keyword">import</span> Html.Events exposing <span class="container">(<span class="title">onClick</span>)</span></span>
+
+<span class="typedef"><span class="keyword">type</span> <span class="type">Action</span> = <span class="type">Increment</span> | <span class="type">Decrement</span> | <span class="type">None</span></span>
+<span class="typedef"><span class="keyword">type</span> alias <span class="type">Model</span> = <span class="type">Int</span></span>
+
+<span class="title">model</span> : <span class="type">Model</span>
+<span class="title">model</span> = <span class="number">0</span>
+
+<span class="title">currentClick</span> : <span class="type">Signal</span>.<span class="type">Mailbox</span> <span class="type">Action</span>
+<span class="title">currentClick</span> = <span class="type">Signal</span>.mailbox <span class="type">None</span>
+
+<span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Model</span> -&gt; <span class="type">Model</span>
+<span class="title">update</span> action model =
+    <span class="keyword">case</span> action <span class="keyword">of</span>
+        <span class="type">Increment</span> -&gt; model + <span class="number">1</span>
+        <span class="type">Decrement</span> -&gt; model - <span class="number">1</span>
+        <span class="type">None</span> -&gt; model
+
+<span class="title">view</span> : <span class="type">Signal</span>.<span class="type">Address</span> <span class="type">Action</span> -&gt; <span class="type">Model</span> -&gt; <span class="type">Html</span>.<span class="type">Html</span>
+<span class="title">view</span> address model = 
+    div []
+        [ button [ onClick address <span class="type">Increment</span> ] [ text <span class="string">"+"</span> ]
+        , div [] [ text (toString model) ]
+        , button [ onClick address <span class="type">Decrement</span> ] [ text <span class="string">"-"</span> ] 
+        ]
+
+<span class="title">model'</span> = <span class="type">Signal</span>.foldp update model currentClick.signal
+
+<span class="title">main</span> = <span class="type">Signal</span>.map (view currentClick.address) model'</code></pre>
+<p>makes: </p>
+<p><div id="example"></div></p>
+<script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script></section>
+  </div>
+  <div class="slide hidden" id="slide-19">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-18">
+  <div class="slide hidden" id="slide-20">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-19">
+  <div class="slide hidden" id="slide-21">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -566,7 +615,7 @@ subscription.dispose();</code></pre>
 <p>Structured around limiting the scope of a section of HTML.</p>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-20">
+  <div class="slide hidden  " id="slide-22">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -575,10 +624,10 @@ subscription.dispose();</code></pre>
 <p>GHC.js is a Haskell subset with a library for creating HTML elements</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-21">
+  <div class="slide hidden" id="slide-23">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-22">
+  <div class="slide hidden" id="slide-24">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">

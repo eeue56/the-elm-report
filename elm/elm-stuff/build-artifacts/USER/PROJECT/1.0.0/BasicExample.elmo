@@ -1,0 +1,73 @@
+Elm.BasicExample = Elm.BasicExample || {};
+Elm.BasicExample.make = function (_elm) {
+   "use strict";
+   _elm.BasicExample = _elm.BasicExample || {};
+   if (_elm.BasicExample.values)
+   return _elm.BasicExample.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "BasicExample",
+   $Basics = Elm.Basics.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var update = F2(function (action,
+   model) {
+      return function () {
+         switch (action.ctor)
+         {case "Decrement":
+            return model - 1;
+            case "Increment":
+            return model + 1;
+            case "None": return model;}
+         _U.badCase($moduleName,
+         "between lines 16 and 19");
+      }();
+   });
+   var model = 0;
+   var None = {ctor: "None"};
+   var currentClick = $Signal.mailbox(None);
+   var model$ = A3($Signal.foldp,
+   update,
+   model,
+   currentClick.signal);
+   var Decrement = {ctor: "Decrement"};
+   var Increment = {ctor: "Increment"};
+   var view = F2(function (address,
+   model) {
+      return A2($Html.div,
+      _L.fromArray([]),
+      _L.fromArray([A2($Html.button,
+                   _L.fromArray([A2($Html$Events.onClick,
+                   address,
+                   Increment)]),
+                   _L.fromArray([$Html.text("+")]))
+                   ,A2($Html.div,
+                   _L.fromArray([]),
+                   _L.fromArray([$Html.text($Basics.toString(model))]))
+                   ,A2($Html.button,
+                   _L.fromArray([A2($Html$Events.onClick,
+                   address,
+                   Decrement)]),
+                   _L.fromArray([$Html.text("-")]))]));
+   });
+   var main = A2($Signal.map,
+   view(currentClick.address),
+   model$);
+   _elm.BasicExample.values = {_op: _op
+                              ,Increment: Increment
+                              ,Decrement: Decrement
+                              ,None: None
+                              ,model: model
+                              ,currentClick: currentClick
+                              ,update: update
+                              ,view: view
+                              ,model$: model$
+                              ,main: main};
+   return _elm.BasicExample.values;
+};
