@@ -83,12 +83,14 @@ In a non-reactive language, you can model changes in time through a couple of di
 ```python
     while True:
         current_time = datetime.now()
+        update_view(current_time)
         time.sleep(1000)
 ``` 
 
 ```javascript
     setInterval(function({
         currentTime = (new Date()).getHours();
+        updateView(currentTime);
     }), 1000);
 ```
 
@@ -98,6 +100,18 @@ whereas in an FRP based language, you would instead do -
     Signal.map timeView (every second)
 ```
 
+
+--
+
+### What's the difference?
+
+In our Python and Javascript examples, our program relies on us updating a mutable value (currentTime) in order to be used elsewhere in the program. 
+
+The developer must be sure to write update functions that not only update the variables used, but the view too.
+
+In our Elm example, there's no need to worry about updating our variables manually. Signal.map will send our view function the time whenever a new signal is produced with a new time (in this case, every second)
+
+
 --
 
 ### Why are people excited about FRP?
@@ -106,13 +120,18 @@ FRP provides a way of modelling programs without the need for callback hell, sim
 
 Instead of worrying about how to update variables, instead the developer can write code focusing on how the variable should be used.
 
+In a developement world where the code bases are prone to getting complex and unstructured, simiplifying things is important.
+
 --
 
 ### Javascript solutions
 
-Solutions such as [`RxJs`](0) already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated
+Solutions such as [`RxJs`](https://github.com/Reactive-Extensions/RxJS) already exist and are used in the wild. `Rx` itself is based largely off of a standard which is language-agnostic, meaning that solutions exist in multiple languages.
 
-[RxJs](https://github.com/Reactive-Extensions/RxJS)
+It is the most widely used library outside of Haskell's FRP implementations.
+
+The lack of FRP-support built-in means that code for expressing models can be complicated quickly a we'll look at in the next couple of slides.
+
 
 --
 

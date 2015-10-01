@@ -480,27 +480,38 @@ sup {
 In a non-reactive language, you can model changes in time through a couple of different ways -</p>
 <pre><code class="lang-python">    <span class="keyword">while</span> <span class="built_in">True</span>:
         current_time = datetime.now()
+        update_view(current_time)
         time.sleep(<span class="number">1000</span>)</code></pre>
 <pre><code class="lang-javascript">    setInterval(<span class="keyword">function</span>({
         currentTime = (<span class="keyword">new</span> Date()).getHours();
+        updateView(currentTime);
     }), <span class="number">1000</span>);</code></pre>
 <p>whereas in an FRP based language, you would instead do -</p>
 <pre><code class="lang-haskell">    <span class="type">Signal</span>.map timeView (every second)</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-11">
-    <section class="slide-content"><h3 id="why-are-people-excited-about-frp-">Why are people excited about FRP?</h3>
-<p>FRP provides a way of modelling programs without the need for callback hell, simplifying the code base. </p>
-<p>Instead of worrying about how to update variables, instead the developer can write code focusing on how the variable should be used.</p>
+    <section class="slide-content"><h3 id="what-s-the-difference-">What&#39;s the difference?</h3>
+<p>In our Python and Javascript examples, our program relies on us updating a mutable value (currentTime) in order to be used elsewhere in the program. </p>
+<p>The developer must be sure to write update functions that not only update the variables used, but the view too.</p>
+<p>In our Elm example, there&#39;s no need to worry about updating our variables manually. Signal.map will send our view function the time whenever a new signal is produced with a new time (in this case, every second)</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-12">
-    <section class="slide-content"><h3 id="javascript-solutions">Javascript solutions</h3>
-<p>Solutions such as <a href="0"><code>RxJs</code></a> already exist and are used in the wild. The lack of FRP-support built-in means that code for expressing models can be complicated</p>
-<p><a href="https://github.com/Reactive-Extensions/RxJS">RxJs</a></p>
+    <section class="slide-content"><h3 id="why-are-people-excited-about-frp-">Why are people excited about FRP?</h3>
+<p>FRP provides a way of modelling programs without the need for callback hell, simplifying the code base. </p>
+<p>Instead of worrying about how to update variables, instead the developer can write code focusing on how the variable should be used.</p>
+<p>In a developement world where the code bases are prone to getting complex and unstructured, simiplifying things is important.</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="javascript-solutions">Javascript solutions</h3>
+<p>Solutions such as <a href="https://github.com/Reactive-Extensions/RxJS"><code>RxJs</code></a> already exist and are used in the wild. <code>Rx</code> itself is based largely off of a standard which is language-agnostic, meaning that solutions exist in multiple languages.</p>
+<p>It is the most widely used library outside of Haskell&#39;s FRP implementations.</p>
+<p>The lack of FRP-support built-in means that code for expressing models can be complicated quickly a we&#39;ll look at in the next couple of slides.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
     <section class="slide-content"><h3 id="back-to-elm">Back to Elm</h3>
 <p>An example with RxJS:</p>
 <pre><code class="lang-javascript"><span class="keyword">var</span> source = getAsyncStockData();
@@ -526,21 +537,21 @@ subscription.dispose();</code></pre>
 <span class="type">Signal</span>.map (moreThan30 &gt;&gt; <span class="type">List</span>.map logItem) getAsyncStockData</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-14">
+  <div class="slide hidden" id="slide-15">
     <section class="slide-content"><h3 id="it-s-neater-right-">It&#39;s neater, right?</h3>
 <p>Having a language designed around Elm, with inspiration from Haskell, means you end up with things like this -</p>
 <pre><code class="lang-haskell"><span class="type">Signal</span>.map : (a -&gt; b) -&gt; <span class="type">Signal</span> a -&gt; <span class="type">Signal</span> b</code></pre>
 <p>Signal.map applies functions to data contained within a Signal.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-15">
+  <div class="slide hidden" id="slide-16">
     <section class="slide-content"><h3 id="the-use-of-functors">The use of functors</h3>
 <p>Elm enables the developer to write their functions ignoring how signals work internally. </p>
 <p>This enables them to express a program at higher level of abstraction, simplifying both the writing and reading of code.</p>
 <p>Elm therefore is very exciting to developers.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-16">
+  <div class="slide hidden" id="slide-17">
     <section class="slide-content"><h3 id="sounds-great-what-s-wrong-with-it-">Sounds great, what&#39;s wrong with it?</h3>
 <p>My paper aims to:</p>
 <ul>
@@ -551,11 +562,11 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-17">
+  <div class="slide hidden" id="slide-18">
     <section class="slide-content"><h1 id="structure-of-elm-apps">Structure of Elm apps</h1>
 </section>
   </div>
-  <div class="slide hidden" id="slide-18">
+  <div class="slide hidden" id="slide-19">
     <section class="slide-content"><h3 id="the-elm-architecture">The Elm Architecture</h3>
 <p>Elm has a defined architecture that all Elm apps follow:</p>
 <h5 id="model">Model</h5>
@@ -566,7 +577,7 @@ subscription.dispose();</code></pre>
 <p>Updates your model based off the current input Signal</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-19">
+  <div class="slide hidden" id="slide-20">
     <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
 <pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
 <span class="import"><span class="keyword">import</span> Html.Events exposing <span class="container">(<span class="title">onClick</span>)</span></span>
@@ -603,7 +614,7 @@ subscription.dispose();</code></pre>
 <p><div id="example"></div></p>
 <script> var div = document.getElementById('example'); Elm.embed(Elm.BasicExample, div);</script></section>
   </div>
-  <div class="slide hidden" id="slide-20">
+  <div class="slide hidden" id="slide-21">
     <section class="slide-content"><h3 id="how-it-works">How it works</h3>
 <p>Elm follows what we call an model-view-update (MVU) cycle. </p>
 <p>Each change in a mapped signal makes the update cycle happen. </p>
@@ -615,7 +626,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-21">
+  <div class="slide hidden" id="slide-22">
     <section class="slide-content"><h3 id="even-more-how-it-works">Even more how it works</h3>
 <p>Each <code>update</code> function has a type signature along the lines of</p>
 <pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Model</span> -&gt; <span class="type">Model</span></code></pre>
@@ -625,7 +636,7 @@ subscription.dispose();</code></pre>
 <p><em>By looking at the definition of an Action, we can tell what our application can do</em></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-22">
+  <div class="slide hidden" id="slide-23">
     <section class="slide-content"><h3 id="action-example">Action example</h3>
 <p>Let&#39;s look at someone else&#39;s source code.</p>
 <pre><code class="lang-haskell"><span class="typedef"><span class="keyword">type</span> <span class="type">Command</span> =</span>
@@ -640,7 +651,7 @@ subscription.dispose();</code></pre>
 <p>taken from <a href="https://github.com/thSoft/froggy/blob/master/src/elm/Froggy/Commands.elm">Froggy example</a></p>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-23">
+  <div class="slide hidden  " id="slide-24">
     <section class="slide-content"><h3 id="vs-react">vs React</h3>
 <p>Compare this is a render function taken from <em>one</em> component in React -</p>
 <pre><code class="lang-javascript"> render: <span class="keyword">function</span>() {
@@ -661,7 +672,7 @@ subscription.dispose();</code></pre>
 <p>Can you tell how many types of interaction there are? Can you tell what they do?</p>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-24">
+  <div class="slide hidden  " id="slide-25">
     <section class="slide-content"><h3 id="event-listeners-in-elm">Event listeners in Elm</h3>
 <p>Elm uses the concept of mailboxes to capture event listeners.</p>
 <p>Mailboxes:</p>
@@ -672,7 +683,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-25">
+  <div class="slide hidden" id="slide-26">
     <section class="slide-content"><h3 id="our-example">Our example</h3>
 <p>This is a slightly different way of implementing our previous example. It does the exact same thing, and functions in the exact same way.</p>
 <pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
@@ -703,7 +714,7 @@ subscription.dispose();</code></pre>
     <span class="type">Noop</span> -&gt; model</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-26">
+  <div class="slide hidden" id="slide-27">
     <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
 <p>Let&#39;s explicitly look at mailboxes from our previous example.</p>
 <p>We create a mailbox with a default message to start with</p>
@@ -716,7 +727,7 @@ subscription.dispose();</code></pre>
     }</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-27">
+  <div class="slide hidden" id="slide-28">
     <section class="slide-content"><h3 id="how-do-we-use-these-fields-">How do we use these fields?</h3>
 <pre><code class="lang-haskell"><span class="title">model'</span> = <span class="type">Signal</span>.foldp update model actions.signal
 `</code></pre>
@@ -732,13 +743,13 @@ subscription.dispose();</code></pre>
    ]</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-28">
+  <div class="slide hidden" id="slide-29">
     <section class="slide-content"><h3 id="vs-traditional-javascript">vs traditional Javascript</h3>
 <p>There are no <code>x.addEventListeners</code> in Elm. <sup>not actually true</sup> If you want to know what happens, look at the <code>Action</code> and <code>update</code> function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.</p>
 <p>This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-29">
+  <div class="slide hidden" id="slide-30">
     <section class="slide-content"><h3 id="type-system">Type system</h3>
 <p>Elm is a static, strongly typed language, very similar to Haskell. If types don&#39;t match at compile-time, the developer will get an error.</p>
 <pre><code class="lang-haskell">
@@ -753,13 +764,13 @@ subscription.dispose();</code></pre>
     <span class="type">String</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-30">
+  <div class="slide hidden" id="slide-31">
     <section class="slide-content"><h3 id="abstract-data-types">Abstract Data Types</h3>
 <p>Abstract data types are the thing that makes the <code>type Action = Something | Nothing</code> possible. </p>
 <p>Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-31">
+  <div class="slide hidden" id="slide-32">
     <section class="slide-content"><h3 id="real-world-adts">Real world ADTs</h3>
 <p>The following example is from <a href="https://github.com/eeue56/stalk/">Stalk</a>, a language with a built-in IDE written in Elm</p>
 <pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Program</span> -&gt; <span class="type">Program</span>
@@ -780,19 +791,19 @@ subscription.dispose();</code></pre>
 <p>The use of <code>case..of</code> here is called <em>pattern matching</em>. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-32">
+  <div class="slide hidden" id="slide-33">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-33">
+  <div class="slide hidden" id="slide-34">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-34">
+  <div class="slide hidden" id="slide-35">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -808,7 +819,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-35">
+  <div class="slide hidden  " id="slide-36">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -817,14 +828,14 @@ subscription.dispose();</code></pre>
 <p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-36">
+  <div class="slide hidden" id="slide-37">
     <section class="slide-content"><h2 id="-">#</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-37">
+  <div class="slide hidden" id="slide-38">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-38">
+  <div class="slide hidden" id="slide-39">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
