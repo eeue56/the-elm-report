@@ -33,8 +33,18 @@ There is little agreement across these different developer groups
 ### So what's this all about?
 
 
-This paper is going to look at a small section of the web development world. In particular, we are going to look at Elm and how some of the concepts in Elm aim to solve some of the issues with modern Javascript.
+This paper is going to look at a small section of the web development world.
 
+In particular, we are going to look at Elm and how some of the concepts in Elm aim to solve some of the issues with modern Javascript.
+
+
+--
+
+### What do I need to know already?
+
+Nothing. This talk assumes nothing about what you already know. 
+
+Every concept that's important will be explained from the ground up, with examples of uses and explanations of why and how.
 --
 
 # Intro to Elm
@@ -178,7 +188,7 @@ Having a language designed around Elm, with inspiration from Haskell, means you 
 Signal.map : (a -> b) -> Signal a -> Signal b
 ```
 
-Signal.map applies functions to data contained within a Signal.
+`Signal.map` applies functions to data contained within a `Signal`.
 
 
 --
@@ -347,6 +357,32 @@ Compare this is a render function taken from _one_ component in React -
 
 Can you tell how many types of interaction there are? Can you tell what they do?
 
+--
+
+# Let's talk about Signals
+
+--
+
+### Signals
+
+Signals are the implementation of FRP that Elm uses. 
+
+Signals have 3 important methods:
+
+```haskell
+map :: (a -> b) -> Signal a -> Signal b
+foldp :: (a -> b -> b) -> b -> Signal a -> Signal b
+filter :: (a -> Bool) -> a -> Signal a -> Signal a
+```
+
+ * `map` applies a function to a value within a signal, producing a new signal
+ * `foldp` applies a fold function to a value, given a start value, and produces new signals based on the old one
+ * `filter` filter applies a function that converts a value into `True/False`, keeping the signals that pass and discarding the rest 
+
+--
+
+# Callbacks in Elm
+
 -- 
 
 ### Event listeners in Elm
@@ -423,7 +459,7 @@ type alias Mailbox a =
 
 ```haskell
 model' = Signal.foldp update model actions.signal
-````
+```
 
 `actions.signal` will give us access to the signal produced by the mailbox. This signal is updated any time something is sent to the associated mailbox
 
@@ -484,7 +520,6 @@ Abstract data types are the thing that makes the `type Action = Something | Noth
 
 Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.
 
-
 --
 
 ### Real world ADTs
@@ -510,6 +545,14 @@ update action program =
 ```
 
 The use of `case..of` here is called _pattern matching_. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.
+
+--
+
+### So what?
+
+ADTs used in this manner control the features of your application. 
+
+If someone wants to make a new feature, then they must add a new constructor for your `Action` type
 
 --
 
