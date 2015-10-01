@@ -399,6 +399,17 @@ pre .chunk {
     overflow: visible !important;
 }
 
+h4 {
+    margin-top: 15px !important;
+    margin-bottom: 0px !important;
+
+}
+
+ul {
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+}
+
 li {
     margin-top: 15px !important;
 }
@@ -823,19 +834,20 @@ subscription.dispose();</code></pre>
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
-<p>Fay is a Haskell subset which exposes a FFI which allows the developer to run any JS code with backing from Haskell&#39;s type system</p>
+<ul>
+<li>Haskell subset</li>
+<li>FFI for running Javascript code</li>
+<li>FFI has Haskell type support</li>
+</ul>
 <h4 id="ghc-js">GHC.js</h4>
-<p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
+<ul>
+<li>Haskell subset</li>
+<li>Predefined functions that can be used in lots of different ways</li>
+<li>Predefined functions prefered to using raw FFI</li>
+</ul>
 </section>
   </div>
   <div class="slide hidden" id="slide-37">
-    <section class="slide-content"><h2 id="-">#</h2>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-38">
-    <section class="slide-content"></section>
-  </div>
-  <div class="slide hidden" id="slide-39">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">

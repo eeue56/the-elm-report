@@ -553,16 +553,13 @@ There's also many "compile to Javascript" languages out there. We'll be looking 
 
 #### Fay
 
-Fay is a Haskell subset which exposes a FFI which allows the developer to run any JS code with backing from Haskell's type system
+ * Haskell subset
+ * FFI for running Javascript code
+ * FFI has Haskell type support
 
 #### GHC.js
 
-GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.
+  * Haskell subset
+  * Predefined functions that can be used in lots of different ways
+  * Predefined functions prefered to using raw FFI
 
---
-
-### 
-
-
-
---

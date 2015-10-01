@@ -5,6 +5,17 @@
     overflow: visible !important;
 }
 
+h4 {
+    margin-top: 15px !important;
+    margin-bottom: 0px !important;
+
+}
+
+ul {
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+}
+
 li {
     margin-top: 15px !important;
 }
