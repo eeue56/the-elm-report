@@ -661,13 +661,84 @@ subscription.dispose();</code></pre>
 <p>Can you tell how many types of interaction there are? Can you tell what they do?</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-24">
+  <div class="slide hidden  " id="slide-24">
+    <section class="slide-content"><h3 id="event-listeners-in-elm">Event listeners in Elm</h3>
+<p>Elm uses the concept of mailboxes to capture event listeners.</p>
+<p>Mailboxes:</p>
+<ul>
+<li>Provide an address for sending items to</li>
+<li>Store messages of a given type (e.g <code>Action</code>)</li>
+<li>Produce a signal that updates for each item in the message box</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
+    <section class="slide-content"><h3 id="our-example">Our example</h3>
+<p>This is a slightly different way of implementing our previous example. It does the exact same thing, and functions in the exact same way.</p>
+<pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
+<span class="import"><span class="keyword">import</span> Html.Events exposing <span class="container">(<span class="title">onClick</span>)</span></span>
+
+<span class="typedef"><span class="keyword">type</span> <span class="type">Action</span> = <span class="type">Increment</span> | <span class="type">Decrement</span> | <span class="type">Noop</span></span>
+
+<span class="title">model</span> = <span class="number">0</span>
+<span class="title">model'</span> = <span class="type">Signal</span>.foldp update model actions.signal
+
+<span class="title">main</span> = <span class="type">Signal</span>.map (view actions.address) model'
+
+<span class="title">view</span> : <span class="type">Signal</span>.<span class="type">Address</span> <span class="type">Action</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">Html</span>.<span class="type">Html</span>
+<span class="title">view</span> address model =
+  div []
+    [ button [ onClick address <span class="type">Decrement</span> ] [ text <span class="string">"-"</span> ]
+    , div [] [ text (toString model) ]
+    , button [ onClick address <span class="type">Increment</span> ] [ text <span class="string">"+"</span> ]
+   ]
+
+<span class="title">actions</span>: <span class="type">Signal</span>.<span class="type">Mailbox</span> <span class="type">Action</span>
+<span class="title">actions</span> = <span class="type">Signal</span>.mailbox <span class="type">Noop</span>
+
+<span class="title">update</span> action model =
+  <span class="keyword">case</span> action <span class="keyword">of</span>
+    <span class="type">Increment</span> -&gt; model + <span class="number">1</span>
+    <span class="type">Decrement</span> -&gt; model - <span class="number">1</span>
+    <span class="type">Noop</span> -&gt; model</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-26">
+    <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
+<p>Let&#39;s explicitly look at mailboxes from our previous example.</p>
+<p>We create a mailbox with a default message to start with</p>
+<pre><code class="lang-haskell"><span class="title">actions</span> : <span class="type">Signal</span>.<span class="type">Mailbox</span> <span class="type">Action</span>
+<span class="title">actions</span> = <span class="type">Signal</span>.mailbox <span class="type">Noop</span></code></pre>
+<p>Once we have a mailbox, we can grab the two important fields in the Mailbox record</p>
+<pre><code class="lang-haskell"><span class="typedef"><span class="keyword">type</span> alias <span class="type">Mailbox</span> a = </span>
+    { address : <span class="type">Address</span> a
+    , signal : <span class="type">Signal</span> a 
+    }</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-27">
+    <section class="slide-content"><h3 id="how-do-we-use-these-fields-">How do we use these fields?</h3>
+<pre><code class="lang-haskell"><span class="title">model'</span> = <span class="type">Signal</span>.foldp update model actions.signal
+`</code></pre>
+<p><code>actions.signal</code> will give us access to the signal produced by the mailbox. This signal is updated any time something is sent to the associated mailbox</p>
+<pre><code class="lang-haskell"><span class="title">main</span> = <span class="type">Signal</span>.map (view actions.address) model'</code></pre>
+<p><code>actions.address</code> will give us the address for the mailbox, which we can use to send items to the mailbox as below</p>
+<pre><code class="lang-haskell"><span class="title">view</span> : <span class="type">Signal</span>.<span class="type">Address</span> <span class="type">Action</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">Html</span>.<span class="type">Html</span>
+<span class="title">view</span> address model =
+  div []
+    [ button [ onClick address <span class="type">Decrement</span> ] [ text <span class="string">"-"</span> ]
+    , div [] [ text (toString model) ]
+    , button [ onClick address <span class="type">Increment</span> ] [ text <span class="string">"+"</span> ]
+   ]</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-28">
     <section class="slide-content"><h3 id="vs-traditional-javascript">vs traditional Javascript</h3>
 <p>There are no <code>x.addEventListeners</code> in Elm. <sup>not actually true</sup> If you want to know what happens, look at the <code>Action</code> and <code>update</code> function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.</p>
 <p>This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-25">
+  <div class="slide hidden" id="slide-29">
     <section class="slide-content"><h3 id="type-system">Type system</h3>
 <p>Elm is a static, strongly typed language, very similar to Haskell. If types don&#39;t match at compile-time, the developer will get an error.</p>
 <pre><code class="lang-haskell">
@@ -682,13 +753,13 @@ subscription.dispose();</code></pre>
     <span class="type">String</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-26">
+  <div class="slide hidden" id="slide-30">
     <section class="slide-content"><h3 id="abstract-data-types">Abstract Data Types</h3>
 <p>Abstract data types are the thing that makes the <code>type Action = Something | Nothing</code> possible. </p>
 <p>Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-27">
+  <div class="slide hidden" id="slide-31">
     <section class="slide-content"><h3 id="real-world-adts">Real world ADTs</h3>
 <p>The following example is from <a href="https://github.com/eeue56/stalk/">Stalk</a>, a language with a built-in IDE written in Elm</p>
 <pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Program</span> -&gt; <span class="type">Program</span>
@@ -709,19 +780,19 @@ subscription.dispose();</code></pre>
 <p>The use of <code>case..of</code> here is called <em>pattern matching</em>. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-28">
+  <div class="slide hidden" id="slide-32">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-29">
+  <div class="slide hidden" id="slide-33">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-30">
+  <div class="slide hidden" id="slide-34">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -737,7 +808,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-31">
+  <div class="slide hidden  " id="slide-35">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -746,14 +817,14 @@ subscription.dispose();</code></pre>
 <p>GHC.js is a Haskell subset with a library for creating HTML elements. It avoids an FFI through providing some predefined functions for working with JS.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-32">
+  <div class="slide hidden" id="slide-36">
     <section class="slide-content"><h2 id="-">#</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-33">
+  <div class="slide hidden" id="slide-37">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-34">
+  <div class="slide hidden" id="slide-38">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">

@@ -328,6 +328,104 @@ Compare this is a render function taken from _one_ component in React -
 
 Can you tell how many types of interaction there are? Can you tell what they do?
 
+-- 
+
+### Event listeners in Elm
+
+
+Elm uses the concept of mailboxes to capture event listeners.
+
+Mailboxes:
+ * Provide an address for sending items to
+ * Store messages of a given type (e.g `Action`)
+ * Produce a signal that updates for each item in the message box
+
+--
+
+### Our example
+
+This is a slightly different way of implementing our previous example. It does the exact same thing, and functions in the exact same way.
+
+```haskell
+import Html exposing (div, button, text)
+import Html.Events exposing (onClick)
+
+type Action = Increment | Decrement | Noop
+
+model = 0
+model' = Signal.foldp update model actions.signal
+
+main = Signal.map (view actions.address) model'
+
+view : Signal.Address Action -> Int -> Html.Html
+view address model =
+  div []
+    [ button [ onClick address Decrement ] [ text "-" ]
+    , div [] [ text (toString model) ]
+    , button [ onClick address Increment ] [ text "+" ]
+   ]
+   
+actions: Signal.Mailbox Action
+actions = Signal.mailbox Noop
+
+update action model =
+  case action of
+    Increment -> model + 1
+    Decrement -> model - 1
+    Noop -> model
+```
+
+--
+
+
+### What does this look like?
+
+Let's explicitly look at mailboxes from our previous example.
+
+We create a mailbox with a default message to start with
+
+```haskell
+actions : Signal.Mailbox Action
+actions = Signal.mailbox Noop
+```
+
+Once we have a mailbox, we can grab the two important fields in the Mailbox record
+
+```haskell
+type alias Mailbox a = 
+    { address : Address a
+    , signal : Signal a 
+    }
+```
+
+--
+
+### How do we use these fields?
+
+```haskell
+model' = Signal.foldp update model actions.signal
+````
+
+`actions.signal` will give us access to the signal produced by the mailbox. This signal is updated any time something is sent to the associated mailbox
+
+```haskell
+main = Signal.map (view actions.address) model'
+```
+
+`actions.address` will give us the address for the mailbox, which we can use to send items to the mailbox as below
+
+```haskell
+view : Signal.Address Action -> Int -> Html.Html
+view address model =
+  div []
+    [ button [ onClick address Decrement ] [ text "-" ]
+    , div [] [ text (toString model) ]
+    , button [ onClick address Increment ] [ text "+" ]
+   ]
+```
+
+
+
 --
 
 ### vs traditional Javascript
@@ -335,6 +433,8 @@ Can you tell how many types of interaction there are? Can you tell what they do?
 There are no `x.addEventListeners` in Elm. <sup>not actually true</sup> If you want to know what happens, look at the `Action` and `update` function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.
 
 This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.
+
+
 
 
 --
