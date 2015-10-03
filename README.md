@@ -588,6 +588,14 @@ There are many Javascript frameworks out there. For this project, we will look a
  * DSL (JSX) for writing HTML contained within Javascript objects
  * Limit scope of each "component" of your page
 
+--
+
+### Redux 
+
+Redux takes the Elm architecture and attempts to apply it to Javascript.
+
+The structure of a Redux app is far more fragmented than an Elm application, and is more difficult to get into.
+
 -- 
 
 ### Haskell alternatives
