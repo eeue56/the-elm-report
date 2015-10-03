@@ -22,7 +22,7 @@ controls: true
 Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. 
 
 
-There is little agreement across these different developer groups
+There is little agreement across these different developer groups on the technology stack to use
 
 
 --
