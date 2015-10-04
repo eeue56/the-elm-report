@@ -66,7 +66,7 @@ Elm appeals to three main markets:
  * Those who use React
  * Those who enjoy learning languages
 
-Elm provides a framework similar to React, in a language similar to Haskell.
+Elm provides a framework similar to React's Flux, in a language similar to Haskell.
 
 --
 
@@ -378,6 +378,23 @@ filter :: (a -> Bool) -> a -> Signal a -> Signal a
  * `map` applies a function to a value within a signal, producing a new signal
  * `foldp` applies a fold function to a value, given a start value, and produces new signals based on the old one
  * `filter` filter applies a function that converts a value into `True/False`, keeping the signals that pass and discarding the rest 
+
+--
+
+### I'm confused already
+
+Scared? Don't worry, it's not as confusing as it seems. For most uses, you'll only need to worry about using `Signal.map`. 
+
+In layman's terms, `Signal.map` allows us to apply a function to a value contained within a `Signal` and create a different resulting Signal.
+
+```haskell
+name : Signal String
+name = <incoming name>
+
+uppercaseName : Signal String
+uppercaseName = Signal.map (toUpper) name
+```
+
 
 --
 
