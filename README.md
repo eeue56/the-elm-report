@@ -704,3 +704,16 @@ The [error-message-catalog](https://github.com/elm-lang/error-message-catalog/) 
 The aim of the project is to document and provide more useful error messages, if you see a stupid error, then add it to the repo!
 
 There's also a [blog](http://elm-lang.org/blog/compiler-errors-for-humans) on the recent modifications to Elm 0.15.1 to try and make more readable errors.
+
+
+--
+
+### Highly unstable
+
+`Signal`s used to be called `Varying`. Streams used to represent what `foldp` does now.  Changes in the core library are slow to be released as bug fixes.
+
+--
+
+### Dodgy array implementation
+
+TODO
