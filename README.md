@@ -635,7 +635,7 @@ There's also many "compile to Javascript" languages out there. We'll be looking 
 --
 
 # The downsides of Elm
-A brief look at the problems
+A brief look at the problems Elm faces
 
 
 --
@@ -667,3 +667,26 @@ There's an effort being taken to try and link and document all related installat
 This issue has reached the attention of Evan and has been acknowledged as a point of frustration.
 
 Elm 0.16 aims to fix this with a new installer.
+
+--
+
+### Elm's error messages are confusing
+
+
+Ever seen a message like this? 
+
+<img src="images/unhelpful.png"></img>
+
+In Elm, error messages can be seen as vague and confusing, especially for those not from Haskell backgrounds.
+
+What the error says is perfectly true, it was given a tuple of `(number, a-> b, b)` when it was expecting to recieve a number, but if you aren't aware of the way that Elm/Haskell function calls work then you won't know that `f x y z` is actually `((f x) y) z`
+
+--
+
+### What's being done to fix it?
+
+The [error-message-catalog](https://github.com/elm-lang/error-message-catalog/) repo run by the elm-lang organization aims to catalog error messages, giving examples of programs that generate error messages.
+
+The aim of the project is to document and provide more useful error messages, if you see a stupid error, then add it to the repo!
+
+There's also a [blog](http://elm-lang.org/blog/compiler-errors-for-humans) on the recent modifications to Elm 0.15.1 to try and make more readable errors.

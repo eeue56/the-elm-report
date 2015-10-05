@@ -900,7 +900,7 @@ subscription.dispose();</code></pre>
   </div>
   <div class="slide hidden" id="slide-44">
     <section class="slide-content"><h1 id="the-downsides-of-elm">The downsides of Elm</h1>
-<p>A brief look at the problems</p>
+<p>A brief look at the problems Elm faces</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-45">
@@ -925,6 +925,21 @@ subscription.dispose();</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-48">
+    <section class="slide-content"><h3 id="elm-s-error-messages-are-confusing">Elm&#39;s error messages are confusing</h3>
+<p>Ever seen a message like this? </p>
+<p><img src="images/unhelpful.png"></img></p>
+<p>In Elm, error messages can be seen as vague and confusing, especially for those not from Haskell backgrounds.</p>
+<p>What the error says is perfectly true, it was given a tuple of <code>(number, a-&gt; b, b)</code> when it was expecting to recieve a number, but if you aren&#39;t aware of the way that Elm/Haskell function calls work then you won&#39;t know that <code>f x y z</code> is actually <code>((f x) y) z</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-49">
+    <section class="slide-content"><h3 id="what-s-being-done-to-fix-it-">What&#39;s being done to fix it?</h3>
+<p>The <a href="https://github.com/elm-lang/error-message-catalog/">error-message-catalog</a> repo run by the elm-lang organization aims to catalog error messages, giving examples of programs that generate error messages.</p>
+<p>The aim of the project is to document and provide more useful error messages, if you see a stupid error, then add it to the repo!</p>
+<p>There&#39;s also a <a href="http://elm-lang.org/blog/compiler-errors-for-humans">blog</a> on the recent modifications to Elm 0.15.1 to try and make more readable errors.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-50">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">
