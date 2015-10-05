@@ -721,3 +721,17 @@ While this is of course needed until Elm finds a good place to become stable, it
 ### Dodgy array implementation
 
 TODO
+
+--
+
+### Small amount of libraries
+
+
+--
+
+### Undocumented native
+
+
+--
+
+### Compiled code doesn't work well with tools like browserify
