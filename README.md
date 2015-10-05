@@ -25,7 +25,7 @@ controls: true
 * [Elm's FRP model](#lets-talk-about-signals)
 * [Elm's type system](#type-system)
 * [Current alternatives](#what-are-the-current-alternatives)
-* [Downsides to Elm](#The-downsides-of-Elm)
+* [Downsides to Elm](#the-downsides-of-Elm)
 
 
 
