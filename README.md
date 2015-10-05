@@ -17,6 +17,20 @@ controls: true
 
 --
 
+# Contents
+
+* [Intro to Elm](#intro-to-elm)
+* [Intro to Functional Reactive Programming](#functional-reactive-programming-frp)
+* [Structure of Elm apps](#structure-of-elm-apps)
+* [Elm's FRP model](#lets-talk-about-signals)
+* [Elm's type system](#type-system)
+* [Current alternatives](#what-are-the-current-alternatives)
+* [Downsides to Elm](#The-downsides-of-Elm)
+
+
+
+--
+
 ### Web development as of 2015
 
 Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. 
