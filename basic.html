@@ -438,7 +438,7 @@ sup {
   <div class="slide hidden" id="slide-2">
     <section class="slide-content"><h3 id="web-development-as-of-2015">Web development as of 2015</h3>
 <p>Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. </p>
-<p>There is little agreement across these different developer groups</p>
+<p>There is little agreement across these different developer groups on the technology stack to use</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-3">
@@ -478,7 +478,7 @@ sup {
 <li>Those who use React</li>
 <li>Those who enjoy learning languages</li>
 </ul>
-<p>Elm provides a framework similar to React, in a language similar to Haskell.</p>
+<p>Elm provides a framework similar to React&#39;s Flux, in a language similar to Haskell.</p>
 </section>
   </div>
   <div class="slide hidden" id="slide-9">
@@ -709,10 +709,21 @@ subscription.dispose();</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-28">
+    <section class="slide-content"><h3 id="i-m-confused-already">I&#39;m confused already</h3>
+<p>Scared? Don&#39;t worry, it&#39;s not as confusing as it seems. For most uses, you&#39;ll only need to worry about using <code>Signal.map</code>. </p>
+<p>In layman&#39;s terms, <code>Signal.map</code> allows us to apply a function to a value contained within a <code>Signal</code> and create a different resulting Signal.</p>
+<pre><code class="lang-haskell"><span class="title">name</span> : <span class="type">Signal</span> <span class="type">String</span>
+<span class="title">name</span> = &lt;incoming name&gt;
+
+<span class="title">uppercaseName</span> : <span class="type">Signal</span> <span class="type">String</span>
+<span class="title">uppercaseName</span> = <span class="type">Signal</span>.map (toUpper) name</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-29">
     <section class="slide-content"><h1 id="callbacks-in-elm">Callbacks in Elm</h1>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-29">
+  <div class="slide hidden  " id="slide-30">
     <section class="slide-content"><h3 id="event-listeners-in-elm">Event listeners in Elm</h3>
 <p>Elm uses the concept of mailboxes to capture event listeners.</p>
 <p>Mailboxes:</p>
@@ -723,7 +734,7 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-30">
+  <div class="slide hidden" id="slide-31">
     <section class="slide-content"><h3 id="our-example">Our example</h3>
 <p>This is a slightly different way of implementing our previous example. It does the exact same thing, and functions in the exact same way.</p>
 <pre><code class="lang-haskell"><span class="import"><span class="keyword">import</span> Html exposing <span class="container">(<span class="title">div</span>, <span class="title">button</span>, <span class="title">text</span>)</span></span>
@@ -754,7 +765,7 @@ subscription.dispose();</code></pre>
     <span class="type">Noop</span> -&gt; model</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-31">
+  <div class="slide hidden" id="slide-32">
     <section class="slide-content"><h3 id="what-does-this-look-like-">What does this look like?</h3>
 <p>Let&#39;s explicitly look at mailboxes from our previous example.</p>
 <p>We create a mailbox with a default message to start with</p>
@@ -767,7 +778,7 @@ subscription.dispose();</code></pre>
     }</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-32">
+  <div class="slide hidden" id="slide-33">
     <section class="slide-content"><h3 id="how-do-we-use-these-fields-">How do we use these fields?</h3>
 <pre><code class="lang-haskell"><span class="title">model'</span> = <span class="type">Signal</span>.foldp update model actions.signal</code></pre>
 <p><code>actions.signal</code> will give us access to the signal produced by the mailbox. This signal is updated any time something is sent to the associated mailbox</p>
@@ -782,13 +793,13 @@ subscription.dispose();</code></pre>
    ]</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-33">
+  <div class="slide hidden" id="slide-34">
     <section class="slide-content"><h3 id="vs-traditional-javascript">vs traditional Javascript</h3>
 <p>There are no <code>x.addEventListeners</code> in Elm. <sup>not actually true</sup> If you want to know what happens, look at the <code>Action</code> and <code>update</code> function. The developer no longer needs to look everywhere in case some other developer decided to introduce mutations in a different place to everyone else.</p>
 <p>This is one of the biggest strengths of Elm. The use of immutability, along with a foldp-structure, makes expressing applications simple.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-34">
+  <div class="slide hidden" id="slide-35">
     <section class="slide-content"><h3 id="type-system">Type system</h3>
 <p>Elm is a static, strongly typed language, very similar to Haskell. If types don&#39;t match at compile-time, the developer will get an error.</p>
 <pre><code class="lang-haskell">
@@ -803,13 +814,13 @@ subscription.dispose();</code></pre>
     <span class="type">String</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-35">
+  <div class="slide hidden" id="slide-36">
     <section class="slide-content"><h3 id="abstract-data-types">Abstract Data Types</h3>
 <p>Abstract data types are the thing that makes the <code>type Action = Something | Nothing</code> possible. </p>
 <p>Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-36">
+  <div class="slide hidden" id="slide-37">
     <section class="slide-content"><h3 id="real-world-adts">Real world ADTs</h3>
 <p>The following example is from <a href="https://github.com/eeue56/stalk/">Stalk</a>, a language with a built-in IDE written in Elm</p>
 <pre><code class="lang-haskell"><span class="title">update</span> : <span class="type">Action</span> -&gt; <span class="type">Program</span> -&gt; <span class="type">Program</span>
@@ -830,25 +841,25 @@ subscription.dispose();</code></pre>
 <p>The use of <code>case..of</code> here is called <em>pattern matching</em>. Pattern matching in languages with ADTs means control flow by doing different things depending on the constructor used for a particular type.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-37">
+  <div class="slide hidden" id="slide-38">
     <section class="slide-content"><h3 id="so-what-">So what?</h3>
 <p>ADTs used in this manner control the features of your application. </p>
 <p>If someone wants to make a new feature, then they must add a new constructor for your <code>Action</code> type</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-38">
+  <div class="slide hidden" id="slide-39">
     <section class="slide-content"><h3 id="what-are-the-current-alternatives-">What are the current alternatives?</h3>
 <p>Picking alternatives in the web development community is never an easy thing. </p>
 <p>There is a common joke of &quot;x days since a new Javascript framework has been released&quot;. </p>
 <p>There&#39;s even a website <a href="http://www.isaacchansky.me/days-since-last-new-js-framework/">dedicated</a> to it.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-39">
+  <div class="slide hidden" id="slide-40">
     <section class="slide-content"><h2 id="js-framework-jokes">js framework jokes</h2>
 <p><img src="images/days_since_js_framework.png" width="100%"></img></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-40">
+  <div class="slide hidden" id="slide-41">
     <section class="slide-content"><h3 id="javascript-alternatives">Javascript alternatives</h3>
 <p>There are many Javascript frameworks out there. For this project, we will look at Angular.js and React.js</p>
 <h4 id="angular">Angular</h4>
@@ -864,7 +875,13 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden  " id="slide-41">
+  <div class="slide hidden" id="slide-42">
+    <section class="slide-content"><h3 id="redux">Redux</h3>
+<p>Redux takes the Elm architecture and attempts to apply it to Javascript.</p>
+<p>The structure of a Redux app is far more fragmented than an Elm application, and is more difficult to get into.</p>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-43">
     <section class="slide-content"><h3 id="haskell-alternatives">Haskell alternatives</h3>
 <p>There&#39;s also many &quot;compile to Javascript&quot; languages out there. We&#39;ll be looking at Haskell-based alternatives such as Fay and GHC.js.</p>
 <h4 id="fay">Fay</h4>
@@ -881,7 +898,33 @@ subscription.dispose();</code></pre>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-42">
+  <div class="slide hidden" id="slide-44">
+    <section class="slide-content"><h1 id="the-downsides-of-elm">The downsides of Elm</h1>
+<p>A brief look at the problems</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-45">
+    <section class="slide-content"><h3 id="intro-to-downsides">Intro to downsides</h3>
+<p>We&#39;ve spoken enough about how great Elm is, and how it works. Now it&#39;s time to start looking at where it falls down.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-46">
+    <section class="slide-content"><h3 id="installation">Installation</h3>
+<p>Whenever I get a student or a coworker to install Elm, the first question they ask me is <code>how?</code> and my insides always curl up a little, preparing myself for the next 4 hours of debugging their machine.</p>
+<p>The biggest problem seems to be when somebody installs on a platform using cabal instead of <code>npm</code>, then cabal is out of date and it fails to install, so they use <code>npm</code> only to see npm error out too!</p>
+<p>No other mainstream language I know of has this problem.</p>
+<p>If I want to use Python, I can download a binary that&#39;ll run just fine. The same for nodejs, Haskell, Java, Go, etc.</p>
+<p>For Elm, the relience on 3rd party means of distrubuting the platform is a massive hurdle, enough to stop anyone from trying it out in their tracks.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-47">
+    <section class="slide-content"><h3 id="what-s-being-done-to-fix-it-">What&#39;s being done to fix it?</h3>
+<p>There&#39;s an effort being taken to try and link and document all related installation issues on <a href="https://github.com/elm-lang/elm-platform/issues/60">Github</a>.</p>
+<p>This issue has reached the attention of Evan and has been acknowledged as a point of frustration.</p>
+<p>Elm 0.16 aims to fix this with a new installer.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-48">
     <section class="slide-content"><div class="author">
   <h1 class="name">Noah</h1>
     <h3 class="url">

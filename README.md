@@ -631,3 +631,39 @@ There's also many "compile to Javascript" languages out there. We'll be looking 
   * Predefined functions that can be used in lots of different ways
   * Predefined functions prefered to using raw FFI
 
+
+--
+
+# The downsides of Elm
+A brief look at the problems
+
+
+--
+
+### Intro to downsides
+
+We've spoken enough about how great Elm is, and how it works. Now it's time to start looking at where it falls down.
+
+--
+
+### Installation 
+
+Whenever I get a student or a coworker to install Elm, the first question they ask me is `how?` and my insides always curl up a little, preparing myself for the next 4 hours of debugging their machine.
+
+The biggest problem seems to be when somebody installs on a platform using cabal instead of `npm`, then cabal is out of date and it fails to install, so they use `npm` only to see npm error out too!
+
+No other mainstream language I know of has this problem.
+
+If I want to use Python, I can download a binary that'll run just fine. The same for nodejs, Haskell, Java, Go, etc.
+
+For Elm, the relience on 3rd party means of distrubuting the platform is a massive hurdle, enough to stop anyone from trying it out in their tracks.
+
+--
+
+### What's being done to fix it?
+
+There's an effort being taken to try and link and document all related installation issues on [Github](https://github.com/elm-lang/elm-platform/issues/60).
+
+This issue has reached the attention of Evan and has been acknowledged as a point of frustration.
+
+Elm 0.16 aims to fix this with a new installer.
