@@ -710,7 +710,11 @@ There's also a [blog](http://elm-lang.org/blog/compiler-errors-for-humans) on th
 
 ### Highly unstable
 
+Any language which is under heavy development is likely to be unstable. Unlike many 0.x releases for other libraries and frameworks, the features and implement of Elm changes rapidly over a short period of time.
+
 `Signal`s used to be called `Varying`. Streams used to represent what `foldp` does now.  Changes in the core library are slow to be released as bug fixes.
+
+While this is of course needed until Elm finds a good place to become stable, it does mean that it is very hard to recommend Elm for production usage. If a new version of Elm comes out, the development team will need an Elm guru to upgrade the version of libraries they're using.
 
 --
 
