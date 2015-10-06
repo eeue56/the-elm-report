@@ -1,6 +1,6 @@
 title: The Elm Report
 author:
-  name: Noah
+  name: Noah/eeue56
   url: https://github.com/eeue56
 output: basic.html
 style: style.css
