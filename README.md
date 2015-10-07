@@ -31,7 +31,7 @@ controls: true
 
 --
 
-### Web development as of 2015
+### The state of web development in 2015
 
 Web development is a weird thing. Out of most modern platforms, it reaches to the largest consumer base, along with the largest developer base. As a result, you have many different approaches to doing the same thing. 
 
