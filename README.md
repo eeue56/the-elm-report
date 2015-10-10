@@ -545,9 +545,9 @@ between these two types:
 
 --
 
-### Abstract Data Types
+### Algebraic Data Types
 
-Abstract data types are the thing that makes the `type Action = Something | Nothing` possible. 
+Algebraic data types are the thing that makes the `type Action = Something | Nothing` possible. 
 
 Being able to define your own ADTs has been something Haskell developers have enjoyed for a while - managing flow through an abstract representation of the data is preferable to using primative values.
 
