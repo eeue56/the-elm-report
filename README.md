@@ -14,6 +14,10 @@ controls: true
 # The Elm Report
 ## The state of Elm in the modern web development world
 
+--
+
+# Where to view?
+## If you're viewing the README on github, it might make more sense to grab the HTML file instead
 
 --
 
